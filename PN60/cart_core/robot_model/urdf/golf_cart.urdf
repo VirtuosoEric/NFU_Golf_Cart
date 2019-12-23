@@ -16,26 +16,33 @@
 
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="cart_core">
 	<link name="base_link"></link>
+	<link name="base_footprint"></link>
 	<link name="laser_link"></link>
 	<link name="velodyne"></link>
 	<link name="camera_pose_frame"></link>
 
+	<joint name = "base2footprint" type = "fixed">
+		<parent link="base_link"/>
+		<child link = "base_footprint"/>
+		<origin xyz = "0.0 0.0 -1.75" rpy="0.0 0.0 0"/>
+	</joint>
+
 	<joint name = "base2laser_link" type = "fixed">
 		<parent link="base_link"/>
 		<child link = "laser_link"/>
-		<origin xyz = "0.0 0.0 0.55" rpy="0.0 0.0 0"/>
+		<origin xyz = "0.0 0.0 0.37" rpy="0.0 0.0 0"/>
 	</joint>
 
 	<joint name = "base2velodyne" type = "fixed">
 		<parent link="base_link"/>
 		<child link = "velodyne"/>
-		<origin xyz = "0.0 0.0 0.55" rpy="0.0 0.0 0"/>
+		<origin xyz = "0.0 0.0 0.37" rpy="0.0 0.0 0"/>
 	</joint>
 
 	<joint name="realsense2base" type="fixed">
 		<parent link="base_link" />
 		<child link="camera_pose_frame" />
-		<origin xyz="0.08 0 0.33" rpy="0 0 0" />
+		<origin xyz="0.1 0 0.35" rpy="0 0 0" />
 	</joint>
 
 </robot>

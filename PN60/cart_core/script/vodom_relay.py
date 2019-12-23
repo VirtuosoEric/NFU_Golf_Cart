@@ -22,7 +22,7 @@ class VoRelay:
         new_odom.child_frame_id = self.baseId
 
         # fix z axies
-        new_odom.pose.pose.position.z = 0.0
+        new_odom.pose.pose.position.z = 1.75
 
         # lock raw and pitch
         old_quat = (vo_msg.pose.pose.orientation.x,vo_msg.pose.pose.orientation.y,
@@ -36,7 +36,7 @@ class VoRelay:
         self.odom_pub.publish(new_odom)
 
         if self.pub_tf:
-            new_pose = (new_odom.pose.pose.position.x,new_odom.pose.pose.position.y,0)
+            new_pose = (new_odom.pose.pose.position.x,new_odom.pose.pose.position.y,new_odom.pose.pose.position.z)
             self.tf_broadcaster.sendTransform( new_pose, new_quat, 
             vo_msg.header.stamp, self.baseId, self.odomId)
 

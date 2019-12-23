@@ -5,7 +5,7 @@
   <include file="$(find velodyne_pointcloud)/launch/VLP16_points.launch"> </include>
 
   <param name="robot_description"
-    textfile="$(find cart_core)/robot_model/urdf/cart_core.urdf" />
+    textfile="$(find cart_core)/robot_model/urdf/golf_cart.urdf" />
 
   <node name="robot_state_publisher" pkg="robot_state_publisher"
     type="robot_state_publisher" />

@@ -1,0 +1,6 @@
+{
+    "python.autoComplete.extraPaths": [
+        ""
+    ],
+    "python.pythonPath": "/usr/bin/python"
+}
