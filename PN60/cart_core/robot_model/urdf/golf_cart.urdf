@@ -1,0 +1,41 @@
+<!--
+  Copyright 2019 The Virtuoso Authors
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="cart_core">
+	<link name="base_link"></link>
+	<link name="laser_link"></link>
+	<link name="velodyne"></link>
+	<link name="camera_pose_frame"></link>
+
+	<joint name = "base2laser_link" type = "fixed">
+		<parent link="base_link"/>
+		<child link = "laser_link"/>
+		<origin xyz = "0.0 0.0 0.55" rpy="0.0 0.0 0"/>
+	</joint>
+
+	<joint name = "base2velodyne" type = "fixed">
+		<parent link="base_link"/>
+		<child link = "velodyne"/>
+		<origin xyz = "0.0 0.0 0.55" rpy="0.0 0.0 0"/>
+	</joint>
+
+	<joint name="realsense2base" type="fixed">
+		<parent link="base_link" />
+		<child link="camera_pose_frame" />
+		<origin xyz="0.08 0 0.33" rpy="0 0 0" />
+	</joint>
+
+</robot>

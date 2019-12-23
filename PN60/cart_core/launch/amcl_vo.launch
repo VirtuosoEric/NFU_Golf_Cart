@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<launch>
+
+    <!-- BASE CONTROL -->
+    <!-- <include file="$(find cart_core)/launch/base_control.launch">
+    </include> -->
+
+    <!-- URDF -->
+    <param name="robot_description" textfile="$(find cart_core)/robot_model/urdf/golf_cart.urdf" />
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+
+    <!-- 3D LIDAR -->
+    <include file="$(find lslidar_c16_decoder)/launch/lslidar_c16.launch">
+    </include>
+
+    <!-- Realsense -->
+    <include file="$(find realsense2_camera)/launch/rs_t265.launch">
+    </include>
+
+    <!-- map server for move_base -->
+    <arg name="map_name" default="no_name.yaml" />
+    <node name="map_server" pkg="map_server" type="map_server" args="$(env HOME)/maps/$(arg map_name)/$(arg map_name).yaml"/>
+
+
+    <!-- MOVE BASE -->
+    <node pkg="move_base" type="move_base" respawn="false" name="move_base">
+        <!-- global planner -->
+        <param name="base_global_planner" value="global_planner/GlobalPlanner" />
+        <rosparam file="$(find cart_core)/param/planner/global_planner_params.yaml" command="load" />
+        <!-- local planner -->
+        <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS"/>
+        <rosparam file="$(find cart_core)/param/planner/dwa_local_planner_params.yaml" command="load" />
+        <!-- TEB Local Planner -->
+        <!-- <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS"/> -->
+        <!-- <rosparam file="$(find cart_core)/param/planner/teb_local_planner_params.yaml" command="load" /> -->
+        <!-- params for move_base -->
+        <param name="planner_frequency" value="1.0" />
+        <param name="controller_frequency" value="10.0" />
+        <param name="controller_patience" value="3.0" />
+        <param name="oscillation_timeout" value="10.0" />
+        <param name="oscillation_distance" value="0.05" />
+        <param name="clearing_rotation_allowed" value="false" />
+        <!-- params for costmap layers -->
+        <rosparam file="$(find cart_core)/param/costmap/global_cost_voxel.yaml" command="load"/>
+        <rosparam file="$(find cart_core)/param/costmap/local_cost_voxel.yaml" command="load"/>
+        <!-- <remap from="odom" to="/camera/odom/sample" /> -->
+    </node>
+
+
+    <!-- AMCL -->
+    <arg name="init_x" default="0" />
+    <arg name="init_y" default="0" />
+    <arg name="init_a" default="0" />
+    <node pkg="amcl" type="amcl" name="amcl" output="screen">
+        <rosparam file="$(find cart_core)/param/amcl/amcl_param.yaml" command="load" />
+
+        <param name="initial_pose_x" value="$(arg init_x)"/>
+        <param name="initial_pose_y" value="$(arg init_y)"/>
+        <param name="initial_pose_a" value="$(arg init_a)"/>
+        <param name="initial_cov_xx" value="0.05" />
+        <param name="initial_cov_yy" value="0.05" />
+        <param name="initial_cov_aa" value="0.02" />
+    </node>
+
+    <node pkg="cart_core" type="vodom_relay.py" name="vodom_relay" output="screen"/>
+</launch>
