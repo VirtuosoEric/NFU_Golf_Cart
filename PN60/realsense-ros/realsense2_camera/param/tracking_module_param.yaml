@@ -1,0 +1,2 @@
+/camera/tracking_module/enable_relocalization: false
+/camera/tracking_module/enable_pose_jumping: false
