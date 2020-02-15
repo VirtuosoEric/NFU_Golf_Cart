@@ -24,11 +24,11 @@
         <param name="base_global_planner" value="global_planner/GlobalPlanner" />
         <rosparam file="$(find cart_core)/param/planner/global_planner_params.yaml" command="load" />
         <!-- local planner -->
-        <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS"/>
-        <rosparam file="$(find cart_core)/param/planner/dwa_local_planner_params.yaml" command="load" />
+        <!-- <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS"/> -->
+        <!-- <rosparam file="$(find cart_core)/param/planner/dwa_local_planner_params.yaml" command="load" /> -->
         <!-- TEB Local Planner -->
-        <!-- <param name="teb_local_planner" value="teb_local_planner/TebLocalPlannerROS"/> -->
-        <!-- <rosparam file="$(find cart_core)/param/planner/teb_local_planner_params.yaml" command="load" /> -->
+        <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS"/>
+        <rosparam file="$(find cart_core)/param/planner/teb_local_planner_params.yaml" command="load" />
         <!-- params for move_base -->
         <param name="planner_frequency" value="1.0" />
         <param name="controller_frequency" value="10.0" />
